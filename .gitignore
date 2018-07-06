@@ -52,11 +52,11 @@ $RECYCLE.BIN/
 # Personalizados
 # ===================================== #
 # Relacionado con el Proyecto
-Assets/_Content/GUI
+Gestor Conexciones Project/Assets/Test/*
+Gestor Conexciones Project/Assets/Test.meta
  
 # COPYRIGHTED / ASSET STORE
-{Carpeta proyecto}/Assets/ThirdParty/*
-{Carpeta proyecto}/Assets/ThirdParty.meta
+
  
 # GITEYE
 *.project
