@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/GestorConexiones Project/Escenas/Alexandria.unity
+    guid: e71aac18e255f1643938294d746e1fa7
