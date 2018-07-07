@@ -48,7 +48,10 @@ namespace MoonAntonio
 		#endregion
 
 		#region Inicializadores
-		private void Start()
+		/// <summary>
+		/// <para>Inicializador de <see cref="LinkBehaviour"/>.</para>
+		/// </summary>
+		private void Start()// Inicializador de LinkBehaviour
 		{
 			// Establecer el valor maximo de la barra de progreso(Slider de UI) en 100(%)
 			if (progressBar.maxValue != 100f) progressBar.maxValue = 100f;
@@ -66,25 +69,32 @@ namespace MoonAntonio
 			DirectoryInfo df = new DirectoryInfo(savePath);
 			if (!df.Exists) Directory.CreateDirectory(savePath);
 
-
+			// Iniciar en el start si procede
 			if (onStart) DescargarArchivo();
 		}
 		#endregion
 
 		#region Actualizadores
-		private void Update()
+		/// <summary>
+		/// <para>Actualizador de <see cref="LinkBehaviour"/>.</para>
+		/// </summary>
+		private void Update()// Actualizador de LinkBehaviour
 		{
+			// Si se esta descargando actualmente
 			if (isDescargando)
 			{
+				// Actualizar el progreso
 				progressBar.value = progreso;
 				progressText.text = progreso.ToString() + "% ";
 
+				// Mostrar los kbs
 				if (isMostrarBytes) bytesText.text = "Recibido : " + bytes + " kb";
 			}
 
-
+			// Si ha terminado la descarga
 			if (isTerminado)
 			{
+				// Cuando es cancelada
 				if (isCancelado)
 				{
 					bytesText.text = "Cancelado";
@@ -93,6 +103,7 @@ namespace MoonAntonio
 				}
 				else
 				{
+					// Si no es cancelada, activar los botones
 					if (!btnDescargaFinalizada.activeSelf)
 					{
 						btnDescargaFinalizada.SetActive(true);
@@ -102,12 +113,14 @@ namespace MoonAntonio
 					progressText.text = "100 %";
 				}
 			}
-
 		}
 		#endregion
 
 		#region API
-		public void DescargarArchivo()
+		/// <summary>
+		/// <para>Descarga el archivo de la url.</para>
+		/// </summary>
+		public void DescargarArchivo()// Descarga el archivo de la url
 		{
 			// Desactivamos la posibilidad de llamar de nuevo al metodo
 			btnIniciarDescarga.SetActive(false);
@@ -128,13 +141,21 @@ namespace MoonAntonio
 			client.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(DescargaCompletada);
 		}
 
-		public void CargarNivel(string name)
+		/// <summary>
+		/// <para>Cargar un nivel.</para>
+		/// </summary>
+		/// <param name="name">Nombre del nivel.</param>
+		public void CargarNivel(string name)// Cargar un nivel
 		{
 			UnityEngine.SceneManagement.SceneManager.LoadScene(name);
 		}
 
-		public void CancelarDescarga()
+		/// <summary>
+		/// <para>Cancelar la descarga del archivo.</para>
+		/// </summary>
+		public void CancelarDescarga()// Cancelar la descarga del archivo
 		{
+			// Canelar la descarga y activar el boton
 			isCancelado = true;
 			if (client != null)
 			{
@@ -143,10 +164,23 @@ namespace MoonAntonio
 
 			btnIniciarDescarga.SetActive(true);
 		}
+
+		/// <summary>
+		/// <para>Salir de la aplicacion.</para>
+		/// </summary>
+		public void SalirApp()// Salir de la aplicacion
+		{
+			Application.Quit();
+		}
 		#endregion
 
 		#region Eventos
-		protected void DescargaCompletada(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+		/// <summary>
+		/// <para>Cuando la descarga se ha completado.</para>
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		protected void DescargaCompletada(object sender, System.ComponentModel.AsyncCompletedEventArgs e)// Cuando la descarga se ha completado
 		{
 			if (isCancelado)
 			{
@@ -167,7 +201,12 @@ namespace MoonAntonio
 			}
 		}
 
-		protected void DescargaProgreso(object sender, DownloadProgressChangedEventArgs e)
+		/// <summary>
+		/// <para>Progreso de la descarga.</para>
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		protected void DescargaProgreso(object sender, DownloadProgressChangedEventArgs e)// Progreso de la descarga
 		{
 			progreso = (e.BytesReceived * 100 / e.TotalBytesToReceive);
 			bytes = e.BytesReceived / 1000 + " / " + e.TotalBytesToReceive / 1000;
@@ -175,8 +214,12 @@ namespace MoonAntonio
 		#endregion
 
 		#region Metodos Privados
-		private void OnDisable()
+		/// <summary>
+		/// <para>Cuando es desactivado el gameobject.</para>
+		/// </summary>
+		private void OnDisable()// Cuando es desactivado el gameobject
 		{
+			// Cancelamos la descarga
 			isCancelado = true;
 			if (client != null) client.CancelAsync();
 		}
